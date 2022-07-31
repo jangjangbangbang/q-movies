@@ -11,9 +11,9 @@ class GenreList {
     required this.genres,
   });
 
-  final List<Genre>? genres;
-
   factory GenreList.fromJson(Map<String, dynamic> json) =>
       _$GenreListFromJson(json);
   Map<String, dynamic> toJson() => _$GenreListToJson(this);
+
+  final List<Genre>? genres;
 }

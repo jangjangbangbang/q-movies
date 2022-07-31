@@ -50,28 +50,85 @@ class MovieListTile extends StatelessWidget {
             children: [
               _moviePoster(),
               SizedBox(width: 16.w),
-              _movieDetails(),
-              SizedBox(width: 14.w),
-              _bookmark(),
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                movie.title,
+                                style: QTypography.title.copyWith(height: 1.5),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(height: 4.h),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    color: QColors.secondary,
+                                    size: 14.w,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  Text(
+                                    '${movie.voteAverage} / 10 IMDb',
+                                    style: QTypography.caption,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 14.w),
+                        SizedBox(
+                          height: 30,
+                          width: 30,
+                          child: InkWell(
+                            onTap: () {},
+                            borderRadius: BorderRadius.circular(20),
+                            splashColor: QColors.splashColor,
+                            highlightColor: QColors.splashColor,
+                            child: const Icon(
+                              Icons.bookmark_outline,
+                              color: QColors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
+                    Expanded(
+                      child: SizedBox(
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Wrap(
+                              children: movie.genreIds.map((i) {
+                                for (var index = 0;
+                                    index < allGenreIds.length;
+                                    index++) {
+                                  if (i == allGenreIds[index]) {
+                                    return GenreWidget(
+                                        text: allGenreNames[index]);
+                                  }
+                                }
+                                return GenreWidget(text: i.toString());
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  SizedBox _bookmark() {
-    return SizedBox(
-      height: 30,
-      width: 30,
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(20),
-        splashColor: QColors.splashColor,
-        highlightColor: QColors.splashColor,
-        child: const Icon(
-          Icons.bookmark_outline,
-          color: QColors.white,
         ),
       ),
     );
@@ -98,53 +155,6 @@ class MovieListTile extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Expanded _movieDetails() {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            movie.title,
-            style: QTypography.title.copyWith(height: 1.5),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(height: 4.h),
-          Row(
-            children: [
-              Icon(
-                Icons.star,
-                color: QColors.secondary,
-                size: 14.w,
-              ),
-              SizedBox(width: 4.w),
-              Text(
-                '${movie.voteAverage} / 10 IMDb',
-                style: QTypography.caption,
-              )
-            ],
-          ),
-          SizedBox(height: 12.h),
-          ConstrainedBox(
-            constraints: const BoxConstraints(),
-            child: SingleChildScrollView(
-              child: Wrap(
-                children: movie.genreIds.map((i) {
-                  for (var index = 0; index < allGenreIds.length; index++) {
-                    if (i == allGenreIds[index]) {
-                      return GenreWidget(text: allGenreNames[index]);
-                    }
-                  }
-                  return GenreWidget(text: i.toString());
-                }).toList(),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -1,5 +1,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:q_movies/models/genre.dart';
@@ -12,25 +13,40 @@ class MoviesController extends GetxController {
   final isLoading = true.obs;
   RxList<Movie> movies = RxList([]);
   RxList<Genre> genres = RxList([]);
-  final page = 1;
+  int page = 1;
+  final reachedEndOfPage = false.obs;
   HttpService http = HttpService();
+  final scrollController = ScrollController();
 
   List<int> allGenreIds = [];
   List<String> allGenreNames = [];
 
   @override
   Future<void> onInit() async {
-    await fetchData();
     super.onInit();
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        page += 1;
+        fetchData(page: page);
+      }
+    });
+    await fetchData(page: page);
   }
 
-  Future<void> fetchData() async {
+  void resetData() {
+    movies.clear();
+    isLoading.value = true;
+    page = 1;
+    reachedEndOfPage.value = false;
+  }
+
+  Future<void> fetchData({required int page}) async {
     const baseUrl = 'https://api.themoviedb.org/3/';
     final endPoint = '${baseUrl}movie/popular?language=en_US&page=$page';
     const genreListUrl = 'https://api.themoviedb.org/3/genre/movie/list';
 
     try {
-      isLoading.value = true;
       final response = await http.getRequest(endPoint);
       final genreList = await http.getRequest(genreListUrl);
       if (response.statusCode == 200) {
@@ -40,8 +56,8 @@ class MoviesController extends GetxController {
         final genreResponse = GenreList.fromJson(
           genreList.data as Map<String, dynamic>,
         );
-        movies.value = paginatedApiResponse.results ?? [];
-        genres.value = genreResponse.genres ?? [];
+        movies.addAll(paginatedApiResponse.results ?? []);
+        genres.addAll(genreResponse.genres ?? []);
 
         if (allGenreIds.isEmpty && genres.isNotEmpty) {
           genres.map((genre) {
@@ -52,15 +68,23 @@ class MoviesController extends GetxController {
           }).toList();
         }
 
+        print('total pages ${paginatedApiResponse.totalPages}');
+
+        if (page >= paginatedApiResponse.totalPages) {
+          reachedEndOfPage.value = true;
+        }
+
         isLoading.value = false;
       } else {
         await Fluttertoast.showToast(
           gravity: ToastGravity.CENTER,
           msg: 'Something went wrong, Please try again',
         );
+        isLoading.value = false;
       }
     } catch (e) {
       print(e);
+      isLoading.value = false;
     }
   }
 

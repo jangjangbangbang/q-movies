@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
 import 'package:q_movies/modules/global_widgets/movie_list_tile.dart';
+import 'package:q_movies/modules/home/home_controller.dart';
 import 'package:q_movies/modules/movies/movies_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MoviesScreen extends StatefulWidget {
   const MoviesScreen({super.key});
@@ -19,6 +21,7 @@ class _MoviesScreenState extends State<MoviesScreen>
   bool get wantKeepAlive => true;
 
   final controller = Get.find<MoviesController>();
+  final homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +47,11 @@ class _MoviesScreenState extends State<MoviesScreen>
                 () => Expanded(
                   child: controller.isLoading.value
                       ? const Center(
-                          child: CircularProgressIndicator(
-                            color: QColors.primary,
-                          ),
+                          child:
+                              CircularProgressIndicator(color: QColors.primary),
                         )
                       : ListView.builder(
+                          controller: controller.scrollController,
                           padding: EdgeInsets.symmetric(
                             horizontal: 20.w,
                             vertical: 10.h,
@@ -66,15 +69,22 @@ class _MoviesScreenState extends State<MoviesScreen>
                                   allGenreNames: controller.allGenreNames,
                                 ),
                                 if (index == controller.movies.length - 1)
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 20.h),
-                                    child: Text(
-                                      'Load more',
-                                      style: QTypography.title.copyWith(
-                                        color: QColors.white.withOpacity(0.6),
-                                      ),
-                                    ),
-                                  )
+                                  if (!controller.reachedEndOfPage.value)
+                                    if (homeController.hasInternet.value)
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          top: 20.h,
+                                          bottom: 40.h,
+                                        ),
+                                        child: Shimmer.fromColors(
+                                          baseColor: Colors.white30,
+                                          highlightColor: Colors.white,
+                                          child: Text(
+                                            'Loading more movies...',
+                                            style: QTypography.title,
+                                          ),
+                                        ),
+                                      )
                               ],
                             );
                           },

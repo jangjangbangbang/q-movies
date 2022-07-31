@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
 import 'package:q_movies/modules/favourites/favourites_screen.dart';
 import 'package:q_movies/modules/home/home_controller.dart';
+import 'package:q_movies/modules/movies/movies_controller.dart';
 import 'package:q_movies/modules/movies/movies_screen.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -13,6 +15,7 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final moviesController = Get.find<MoviesController>();
     return ColoredBox(
       color: QColors.bgColor,
       child: SafeArea(
@@ -26,11 +29,25 @@ class HomeScreen extends GetView<HomeController> {
               title: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.h),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SvgPicture.asset(
                       'assets/icons/img-logo.svg',
                       fit: BoxFit.fitHeight,
                       height: 24.h,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        moviesController
+                          ..resetData()
+                          ..fetchData(page: 1);
+                      },
+                      style: TextButton.styleFrom(primary: QColors.white),
+                      child: Text(
+                        'Refresh',
+                        style:
+                            QTypography.title.copyWith(color: Colors.white38),
+                      ),
                     )
                   ],
                 ),

@@ -1,22 +1,59 @@
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: lines_longer_than_80_chars, inference_failure_on_instance_creation
 
-import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:async';
+
+import 'package:another_flushbar/flushbar.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  Future<bool> onWillPop() async {
-    var backButtonPressedTime = DateTime.now();
-    final difference = DateTime.now().difference(backButtonPressedTime);
-    final isExitWarning = difference >= const Duration(seconds: 2);
+  late StreamSubscription<dynamic> subscription;
+  final hasInternet = false.obs;
 
-    backButtonPressedTime = DateTime.now();
+  @override
+  void onInit() {
+    super.onInit();
+    // checkConnectivity();
+    subscription = Connectivity().onConnectivityChanged.listen((result) {
+      print(result);
+      if (result.name != 'none') {
+        hasInternet.value = true;
 
-    if (isExitWarning) {
-      await Fluttertoast.showToast(msg: 'Press back again to exit');
-      return false;
+        Flushbar(
+          backgroundColor: Colors.green,
+          message: 'Connected to the Internet',
+          flushbarStyle: FlushbarStyle.GROUNDED,
+          duration: const Duration(seconds: 3),
+          flushbarPosition: FlushbarPosition.TOP,
+        ).show(Get.context!);
+      } else {
+        hasInternet.value = false;
+
+        Flushbar(
+          backgroundColor: Colors.red,
+          message: 'No Internet',
+          flushbarStyle: FlushbarStyle.GROUNDED,
+          duration: const Duration(seconds: 3),
+          flushbarPosition: FlushbarPosition.TOP,
+        ).show(Get.context!);
+      }
+    });
+  }
+
+  @override
+  void onClose() {
+    subscription.cancel();
+    super.onClose();
+  }
+
+  Future<void> checkConnectivity() async {
+    final result = await Connectivity().checkConnectivity();
+
+    if (result != ConnectivityResult.none) {
+      hasInternet.value = true;
     } else {
-      await Fluttertoast.cancel();
-      return true;
+      hasInternet.value = false;
     }
   }
 }

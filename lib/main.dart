@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/routes/app_pages.dart';
 
@@ -11,6 +12,10 @@ Future<void> main() async {
       systemNavigationBarColor: QColors.navColor,
     ),
   );
+
+  await Hive.initFlutter();
+  // final boxCacheData = await Hive.openBox('boxCacheData');
+
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }

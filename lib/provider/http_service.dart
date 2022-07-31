@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:dio/dio.dart';
 
 class HttpService {
@@ -39,7 +41,7 @@ class HttpService {
           handler.next(err);
         },
         onRequest: (request, handler) {
-          print("request ${request.method} ${request.path}");
+          print('request ${request.method} ${request.path}');
           handler.next(request);
         },
         onResponse: (response, handler) {

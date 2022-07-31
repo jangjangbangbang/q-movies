@@ -11,9 +11,9 @@ class MovieDetailsController extends GetxController {
 
   @override
   void onInit() {
+    super.onInit();
     movie = argumentData[0]['movie'] as Movie;
     allGenreIds = argumentData[0]['allGenreIds'] as List<int>;
     allGenreNames = argumentData[0]['allGenreNames'] as List<String>;
-    super.onInit();
   }
 }
