@@ -61,22 +61,18 @@ class _MoviesScreenState extends State<MoviesScreen>
                             return Column(
                               children: [
                                 MovieListTile(
-                                  id: movie.id,
-                                  title: movie.title,
-                                  overview: movie.overview,
-                                  posterPath: movie.posterPath,
-                                  voteAverage: movie.voteAverage,
-                                  genreIds: movie.genreIds,
-                                  genreIdList: controller.genreIdList,
-                                  genreNameList: controller.genreNameList,
+                                  movie: movie,
+                                  allGenreIds: controller.allGenreIds,
+                                  allGenreNames: controller.allGenreNames,
                                 ),
                                 if (index == controller.movies.length - 1)
                                   Padding(
                                     padding: EdgeInsets.only(bottom: 20.h),
                                     child: Text(
                                       'Load more',
-                                      style: QTypography.title
-                                          .copyWith(color: Colors.white54),
+                                      style: QTypography.title.copyWith(
+                                        color: QColors.white.withOpacity(0.6),
+                                      ),
                                     ),
                                   )
                               ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class QColors {
+  static const white = Color(0xFFE4ECEF);
   static const navColor = Color(0xFF010510);
   static const bgColor = Color(0xFF0E1324);
   static const primary = Color(0xFFEC9B3E);

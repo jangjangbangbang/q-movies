@@ -15,8 +15,8 @@ class MoviesController extends GetxController {
   final page = 1;
   HttpService http = HttpService();
 
-  List<int> genreIdList = [];
-  List<String> genreNameList = [];
+  List<int> allGenreIds = [];
+  List<String> allGenreNames = [];
 
   @override
   Future<void> onInit() async {
@@ -43,11 +43,13 @@ class MoviesController extends GetxController {
         movies.value = paginatedApiResponse.results ?? [];
         genres.value = genreResponse.genres ?? [];
 
-        if (genreIdList.isEmpty && genres.isNotEmpty) {
-          for (var i = 0; i < genres.length; i++) {
-            genreIdList.add(genres[i].id);
-            genreNameList.add(genres[i].name);
-          }
+        if (allGenreIds.isEmpty && genres.isNotEmpty) {
+          genres.map((genre) {
+            final genreId = genre.id;
+            final genreName = genre.name;
+            allGenreIds.add(genreId);
+            allGenreNames.add(genreName);
+          }).toList();
         }
 
         isLoading.value = false;

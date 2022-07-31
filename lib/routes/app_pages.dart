@@ -3,8 +3,9 @@
 import 'package:get/get.dart';
 import 'package:q_movies/modules/home/home_binding.dart';
 import 'package:q_movies/modules/home/home_screen.dart';
+import 'package:q_movies/modules/movie_details/movie_details_binding.dart';
+import 'package:q_movies/modules/movie_details/movie_details_screen.dart';
 import 'package:q_movies/modules/movies/movies_binding.dart';
-import 'package:q_movies/modules/movies/movies_screen.dart';
 
 part 'app_routes.dart';
 
@@ -17,16 +18,11 @@ class AppPages {
         HomeBinding(),
         MoviesBinding(),
       ],
-      children: [
-        GetPage(
-          name: '/movies',
-          page: () => const MoviesScreen(),
-        ),
-        GetPage(
-          name: '/favourites',
-          page: () => const MoviesScreen(),
-        ),
-      ],
+    ),
+    GetPage(
+      name: '/movie_details',
+      page: () => const MovieDetailsScreen(),
+      binding: MovieDetailsBinding(),
     ),
   ];
 }

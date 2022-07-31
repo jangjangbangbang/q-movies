@@ -1,36 +1,43 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
+import 'package:q_movies/models/genre.dart';
+import 'package:q_movies/models/movie.dart';
 import 'package:q_movies/modules/global_widgets/genre_widget.dart';
+import 'package:q_movies/routes/app_pages.dart';
 
 class MovieListTile extends StatelessWidget {
   const MovieListTile({
     super.key,
-    required this.id,
-    required this.title,
-    required this.overview,
-    required this.posterPath,
-    required this.voteAverage,
-    required this.genreIds,
-    required this.genreIdList,
-    required this.genreNameList,
+    required this.movie,
+    required this.allGenreIds,
+    required this.allGenreNames,
   });
-  final int id;
-  final String title;
-  final String overview;
-  final String posterPath;
-  final double voteAverage;
-  final List<int> genreIds;
-  final List<int> genreIdList;
-  final List<String> genreNameList;
+  final Movie movie;
+  final List<int> allGenreIds;
+  final List<String> allGenreNames;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.h),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Get.toNamed(
+            Routes.MOVIE_DETAILS_SCREEN,
+            arguments: [
+              {
+                'movie': movie,
+                'allGenreIds': allGenreIds,
+                'allGenreNames': allGenreNames,
+              }
+            ],
+          );
+        },
         splashColor: QColors.splashColor,
         highlightColor: QColors.splashColor,
         borderRadius: BorderRadius.circular(4.r),
@@ -62,7 +69,7 @@ class MovieListTile extends StatelessWidget {
         highlightColor: QColors.splashColor,
         child: Icon(
           Icons.bookmark_outline,
-          color: Colors.white,
+          color: QColors.white,
         ),
       ),
     );
@@ -73,9 +80,12 @@ class MovieListTile extends StatelessWidget {
       height: 100.h,
       width: 100.h,
       // color: Colors.blue,
-      child: Image.network(
-        'https://image.tmdb.org/t/p/w500/$posterPath',
-        fit: BoxFit.fitWidth,
+      child: Hero(
+        tag: movie.id,
+        child: Image.network(
+          'https://image.tmdb.org/t/p/w500/${movie.posterPath}',
+          fit: BoxFit.fitWidth,
+        ),
       ),
     );
   }
@@ -86,7 +96,7 @@ class MovieListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            movie.title,
             style: QTypography.title.copyWith(height: 1.5),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -101,7 +111,7 @@ class MovieListTile extends StatelessWidget {
               ),
               SizedBox(width: 4.w),
               Text(
-                '$voteAverage / 10 IMDb',
+                '${movie.voteAverage} / 10 IMDb',
                 style: QTypography.caption,
               )
             ],
@@ -111,17 +121,14 @@ class MovieListTile extends StatelessWidget {
             constraints: const BoxConstraints(),
             child: SingleChildScrollView(
               child: Wrap(
-                children: genreIds.map((i) {
-                  for (var index = 0; index < genreIdList.length; index++) {
-                    if (i == genreIdList[index]) {
-                      return GenreWidget(text: genreNameList[index]);
+                children: movie.genreIds.map((i) {
+                  for (var index = 0; index < allGenreIds.length; index++) {
+                    if (i == allGenreIds[index]) {
+                      return GenreWidget(text: allGenreNames[index]);
                     }
                   }
                   return GenreWidget(text: i.toString());
                 }).toList(),
-                // genreIds
-                //     .map((i) => GenreWidget(text: i.toString()))
-                //     .toList(),
               ),
             ),
           ),

@@ -1,21 +1,9 @@
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController
-    with GetSingleTickerProviderStateMixin {
-  TabController? tabController;
-  final tabIndex = 0.obs;
-
-  @override
-  Future<void> onInit() async {
-    tabController =
-        TabController(initialIndex: tabIndex.value, length: 2, vsync: this);
-    super.onInit();
-  }
-
+class HomeController extends GetxController {
   Future<bool> onWillPop() async {
     var backButtonPressedTime = DateTime.now();
     final difference = DateTime.now().difference(backButtonPressedTime);

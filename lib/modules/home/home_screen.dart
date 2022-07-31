@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
+import 'package:q_movies/modules/favourites/favourites_screen.dart';
 import 'package:q_movies/modules/home/home_controller.dart';
 import 'package:q_movies/modules/movies/movies_screen.dart';
 
@@ -35,17 +36,17 @@ class HomeScreen extends GetView<HomeController> {
                 ),
               ),
             ),
-            body: TabBarView(
+            body: const TabBarView(
               children: [
                 MoviesScreen(),
-                MoviesScreen(),
+                FavouritesScreen(),
               ],
             ),
             bottomNavigationBar: ColoredBox(
               color: QColors.navColor,
               child: TabBar(
                 labelColor: QColors.primary,
-                unselectedLabelColor: Colors.white,
+                unselectedLabelColor: QColors.white,
                 labelStyle: QTypography.caption.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
