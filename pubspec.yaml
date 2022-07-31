@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animate_do: ^2.1.0
+  cached_network_image: ^3.2.1
   connectivity_plus: ^2.3.6
 
   # The following adds the Cupertino Icons font to your application.
@@ -45,6 +46,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   json_annotation: ^4.6.0
+  shimmer: ^2.0.0
 
 flutter_native_splash:
   color: "#0E1324"

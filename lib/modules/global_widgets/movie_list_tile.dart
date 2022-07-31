@@ -1,13 +1,15 @@
 // ignore_for_file: inference_failure_on_function_invocation
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
-import 'package:q_movies/models/genre.dart';
 import 'package:q_movies/models/movie.dart';
 import 'package:q_movies/modules/global_widgets/genre_widget.dart';
+import 'package:q_movies/modules/global_widgets/q_loading.dart';
 import 'package:q_movies/routes/app_pages.dart';
 
 class MovieListTile extends StatelessWidget {
@@ -67,7 +69,7 @@ class MovieListTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         splashColor: QColors.splashColor,
         highlightColor: QColors.splashColor,
-        child: Icon(
+        child: const Icon(
           Icons.bookmark_outline,
           color: QColors.white,
         ),
@@ -76,15 +78,25 @@ class MovieListTile extends StatelessWidget {
   }
 
   Widget _moviePoster() {
-    return SizedBox(
-      height: 100.h,
-      width: 100.h,
-      // color: Colors.blue,
-      child: Hero(
-        tag: movie.id,
-        child: Image.network(
-          'https://image.tmdb.org/t/p/w500/${movie.posterPath}',
-          fit: BoxFit.fitWidth,
+    return Hero(
+      tag: movie.id,
+      child: CachedNetworkImage(
+        imageUrl: 'https://image.tmdb.org/t/p/w500/${movie.posterPath}',
+        fit: BoxFit.fitWidth,
+        height: 100.h,
+        width: 100.h,
+        placeholder: (context, url) => const Center(
+          child: QLoading(),
+        ),
+        errorWidget: (context, url, error) => Center(
+          child: SizedBox(
+            height: 50.h,
+            width: 50.h,
+            child: SvgPicture.asset(
+              'assets/icons/img-logo.svg',
+              color: QColors.primary,
+            ),
+          ),
         ),
       ),
     );
