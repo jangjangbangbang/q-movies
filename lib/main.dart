@@ -12,11 +12,9 @@ Future<void> main() async {
       systemNavigationBarColor: QColors.navColor,
     ),
   );
-
-  await Hive.initFlutter();
-  // final boxCacheData = await Hive.openBox('boxCacheData');
-
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
   runApp(const MyApp());
 }
 

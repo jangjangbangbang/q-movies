@@ -68,8 +68,6 @@ class MoviesController extends GetxController {
           }).toList();
         }
 
-        print('total pages ${paginatedApiResponse.totalPages}');
-
         if (page >= paginatedApiResponse.totalPages) {
           reachedEndOfPage.value = true;
         }

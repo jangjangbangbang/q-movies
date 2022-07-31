@@ -16,13 +16,13 @@ class HomeController extends GetxController {
     super.onInit();
     // checkConnectivity();
     subscription = Connectivity().onConnectivityChanged.listen((result) {
-      print(result);
       if (result.name != 'none') {
         hasInternet.value = true;
 
         Flushbar(
           backgroundColor: Colors.green,
-          message: 'Connected to the Internet',
+          message:
+              'Connected to the Internet - ${result.name == 'wifi' ? 'Wifi Network' : 'Mobile Network'}',
           flushbarStyle: FlushbarStyle.GROUNDED,
           duration: const Duration(seconds: 3),
           flushbarPosition: FlushbarPosition.TOP,
@@ -32,7 +32,7 @@ class HomeController extends GetxController {
 
         Flushbar(
           backgroundColor: Colors.red,
-          message: 'No Internet',
+          message: 'No Internet - Check Network Connection',
           flushbarStyle: FlushbarStyle.GROUNDED,
           duration: const Duration(seconds: 3),
           flushbarPosition: FlushbarPosition.TOP,

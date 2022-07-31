@@ -9,7 +9,7 @@ import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
 import 'package:q_movies/models/movie.dart';
 import 'package:q_movies/modules/global_widgets/genre_widget.dart';
-import 'package:q_movies/modules/global_widgets/q_loading.dart';
+import 'package:q_movies/modules/global_widgets/q_loader.dart';
 import 'package:q_movies/routes/app_pages.dart';
 
 class MovieListTile extends StatelessWidget {
@@ -143,7 +143,7 @@ class MovieListTile extends StatelessWidget {
         height: 100.h,
         width: 100.h,
         placeholder: (context, url) => const Center(
-          child: QLoading(),
+          child: QLoader(),
         ),
         errorWidget: (context, url, error) => Center(
           child: SizedBox(
