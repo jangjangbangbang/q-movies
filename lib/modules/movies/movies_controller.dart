@@ -3,13 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:q_movies/models/cache_hive.dart';
 import 'package:q_movies/models/genre.dart';
 import 'package:q_movies/models/genre_list.dart';
 import 'package:q_movies/models/movie.dart';
 import 'package:q_movies/models/paginated_api_response.dart';
+import 'package:q_movies/modules/global_widgets/boxes.dart';
+import 'package:q_movies/modules/home/home_controller.dart';
 import 'package:q_movies/provider/http_service.dart';
 
 class MoviesController extends GetxController {
+  final homeController = Get.find<HomeController>();
   final isLoading = true.obs;
   RxList<Movie> movies = RxList([]);
   RxList<Genre> genres = RxList([]);
@@ -21,17 +25,28 @@ class MoviesController extends GetxController {
   List<int> allGenreIds = [];
   List<String> allGenreNames = [];
 
+  final boxCache = Boxes.getCacheHive();
+  final isBoxCacheEmpty = true.obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
     scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent ==
-          scrollController.offset) {
-        page += 1;
-        fetchData(page: page);
+      if (homeController.hasInternet.value) {
+        if (scrollController.position.maxScrollExtent ==
+            scrollController.offset) {
+          page += 1;
+          fetchDataFromApi(page: page);
+        }
       }
     });
-    await fetchData(page: page);
+
+    await homeController.checkConnectivity();
+    homeController.hasInternet.value
+        ? await fetchDataFromApi(page: page)
+        : boxCache.isEmpty
+            ? isBoxCacheEmpty.value = true
+            : await fetchDataFromHive();
   }
 
   void resetData() {
@@ -41,7 +56,8 @@ class MoviesController extends GetxController {
     reachedEndOfPage.value = false;
   }
 
-  Future<void> fetchData({required int page}) async {
+  ///Fetch data from api and update cache data
+  Future<void> fetchDataFromApi({required int page}) async {
     const baseUrl = 'https://api.themoviedb.org/3/';
     final endPoint = '${baseUrl}movie/popular?language=en_US&page=$page';
     const genreListUrl = 'https://api.themoviedb.org/3/genre/movie/list';
@@ -50,6 +66,7 @@ class MoviesController extends GetxController {
       final response = await http.getRequest(endPoint);
       final genreList = await http.getRequest(genreListUrl);
       if (response.statusCode == 200) {
+        await boxCache.clear();
         final paginatedApiResponse = PaginatedApiResponse.fromJson(
           response.data as Map<String, dynamic>,
         );
@@ -72,6 +89,8 @@ class MoviesController extends GetxController {
           reachedEndOfPage.value = true;
         }
 
+        await cacheMovies(movies: movies, genres: genres);
+
         isLoading.value = false;
       } else {
         await Fluttertoast.showToast(
@@ -84,6 +103,29 @@ class MoviesController extends GetxController {
       print(e);
       isLoading.value = false;
     }
+  }
+
+  ///Cache data from api
+  Future<void> cacheMovies({
+    required List<Movie> movies,
+    required List<Genre> genres,
+  }) async {
+    final cacheMovies = CacheHive()
+      ..movies = movies
+      ..genres = genres;
+
+    await boxCache.add(cacheMovies);
+
+    // boxCache.values.map((e) => print(e.genres));
+  }
+
+  ///Fetch data from cached hive
+  Future<void> fetchDataFromHive() async {
+    boxCache.values.map((cacheData) {
+      movies.addAll(cacheData.movies);
+      genres.addAll(cacheData.genres);
+    }).toList();
+    isLoading.value = false;
   }
 
   Future<bool> onWillPop() async {

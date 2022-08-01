@@ -38,9 +38,11 @@ class HomeScreen extends GetView<HomeController> {
                     ),
                     TextButton(
                       onPressed: () {
-                        moviesController
-                          ..resetData()
-                          ..fetchData(page: 1);
+                        if (controller.hasInternet.value) {
+                          moviesController
+                            ..resetData()
+                            ..fetchDataFromApi(page: 1);
+                        }
                       },
                       style: TextButton.styleFrom(primary: QColors.white),
                       child: Text(

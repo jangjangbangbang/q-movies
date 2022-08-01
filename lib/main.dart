@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:q_movies/core/qcolors.dart';
+import 'package:q_movies/models/cache_hive.dart';
+import 'package:q_movies/models/genre.dart';
+import 'package:q_movies/models/movie.dart';
 import 'package:q_movies/routes/app_pages.dart';
 
 Future<void> main() async {
@@ -14,6 +17,12 @@ Future<void> main() async {
   );
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
+  Hive
+    ..registerAdapter(MovieAdapter())
+    ..registerAdapter(GenreAdapter())
+    ..registerAdapter(CacheHiveAdapter());
+  await Hive.openBox<CacheHive>('cacheHive');
 
   runApp(const MyApp());
 }
