@@ -9,10 +9,10 @@ import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
 import 'package:q_movies/models/movie.dart';
 import 'package:q_movies/modules/global_widgets/genre_widget.dart';
-import 'package:q_movies/modules/global_widgets/movie_widget/movie_widget_controller.dart';
 import 'package:q_movies/modules/global_widgets/q_loader.dart';
-import 'package:q_movies/modules/movies/movies_controller.dart';
+import 'package:q_movies/modules/home/home_controller.dart';
 import 'package:q_movies/routes/app_pages.dart';
+import 'package:q_movies/utils/boxes.dart';
 
 class MovieWidget extends StatelessWidget {
   const MovieWidget({
@@ -31,8 +31,8 @@ class MovieWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put<MovieWidgetController>(MovieWidgetController());
-    final moviesController = Get.find<MoviesController>();
+    final boxController = Get.put<BoxController>(BoxController());
+    final controller = Get.find<HomeController>();
     return Padding(
       padding: EdgeInsets.only(bottom: 20.h),
       child: InkWell(
@@ -99,25 +99,21 @@ class MovieWidget extends StatelessWidget {
                           child: Obx(
                             () => InkWell(
                               onTap: () {
-                                // moviesController.faveMovies.clear();
-
-                                // controller.addToFavourites(movie: movie);
-
-                                moviesController.isFaveMovieList[index]
-                                    ? controller.removeFromFavourites(
+                                controller.isFaveMovieList[index]
+                                    ? boxController.removeFromFavourites(
                                         movie: movie,
                                       )
-                                    : controller.addToFavourites(movie: movie);
+                                    : boxController.addToFavourites(
+                                        movie: movie,
+                                      );
 
-                                moviesController.isFaveMovieList[index] =
-                                    !moviesController.isFaveMovieList[index];
-
-                                print(moviesController.faveMovies.values);
+                                controller.isFaveMovieList[index] =
+                                    !controller.isFaveMovieList[index];
                               },
                               borderRadius: BorderRadius.circular(20),
                               splashColor: QColors.splashColor,
                               highlightColor: QColors.splashColor,
-                              child: moviesController.isFaveMovieList[index]
+                              child: controller.isFaveMovieList[index]
                                   ? const Icon(
                                       Icons.bookmark_added,
                                       color: QColors.primary,

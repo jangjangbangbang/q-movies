@@ -3,26 +3,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
-import 'package:q_movies/modules/global_widgets/boxes.dart';
-import 'package:q_movies/modules/global_widgets/movie_widget/movie_widget.dart';
+import 'package:q_movies/modules/home/local_widget/movie_widget.dart';
 import 'package:q_movies/modules/home/home_controller.dart';
-import 'package:q_movies/modules/movies/movies_controller.dart';
 import 'package:shimmer/shimmer.dart';
 
-class MoviesScreen extends StatefulWidget {
-  const MoviesScreen({super.key});
+class MoviesTab extends StatefulWidget {
+  const MoviesTab({super.key});
 
   @override
-  State<MoviesScreen> createState() => _MoviesScreenState();
+  State<MoviesTab> createState() => _MoviesTabState();
 }
 
-class _MoviesScreenState extends State<MoviesScreen>
-    with AutomaticKeepAliveClientMixin<MoviesScreen> {
+class _MoviesTabState extends State<MoviesTab>
+    with AutomaticKeepAliveClientMixin<MoviesTab> {
   @override
   bool get wantKeepAlive => true;
 
-  final controller = Get.find<MoviesController>();
-  final homeController = Get.find<HomeController>();
+  final controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +72,7 @@ class _MoviesScreenState extends State<MoviesScreen>
                                 ),
                                 if (index == controller.movies.length - 1)
                                   if (!controller.reachedEndOfPage.value)
-                                    if (homeController.hasInternet.value)
+                                    if (controller.hasInternet.value)
                                       Padding(
                                         padding: EdgeInsets.only(
                                           top: 20.h,

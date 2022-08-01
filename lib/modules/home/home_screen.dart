@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
-import 'package:q_movies/modules/favourites/favourites_screen.dart';
+import 'package:q_movies/modules/home/local_widget/favourites_tab.dart';
 import 'package:q_movies/modules/home/home_controller.dart';
-import 'package:q_movies/modules/movies/movies_controller.dart';
-import 'package:q_movies/modules/movies/movies_screen.dart';
+import 'package:q_movies/modules/home/local_widget/movies_tab.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final moviesController = Get.find<MoviesController>();
     return ColoredBox(
       color: QColors.bgColor,
       child: SafeArea(
@@ -41,7 +38,7 @@ class HomeScreen extends GetView<HomeController> {
                           ? TextButton(
                               onPressed: () {
                                 if (controller.hasInternet.value) {
-                                  moviesController.refreshData();
+                                  controller.refreshData();
                                 }
                               },
                               style:
@@ -79,8 +76,8 @@ class HomeScreen extends GetView<HomeController> {
             ),
             body: const TabBarView(
               children: [
-                MoviesScreen(),
-                FavouritesScreen(),
+                MoviesTab(),
+                FavouritesTab(),
               ],
             ),
             bottomNavigationBar: ColoredBox(
@@ -103,11 +100,6 @@ class HomeScreen extends GetView<HomeController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // SvgPicture.asset(
-                        //   'assets/icons/movie.svg',
-                        //   fit: BoxFit.fitWidth,
-                        //   width: 24.w,
-                        // ),
                         const Icon(Icons.movie_creation_outlined),
                         SizedBox(width: 8.w),
                         const Text('Movies'),
