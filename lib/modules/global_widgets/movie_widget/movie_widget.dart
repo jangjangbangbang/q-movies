@@ -9,22 +9,30 @@ import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
 import 'package:q_movies/models/movie.dart';
 import 'package:q_movies/modules/global_widgets/genre_widget.dart';
+import 'package:q_movies/modules/global_widgets/movie_widget/movie_widget_controller.dart';
 import 'package:q_movies/modules/global_widgets/q_loader.dart';
+import 'package:q_movies/modules/movies/movies_controller.dart';
 import 'package:q_movies/routes/app_pages.dart';
 
-class MovieListTile extends StatelessWidget {
-  const MovieListTile({
+class MovieWidget extends StatelessWidget {
+  const MovieWidget({
     super.key,
     required this.movie,
     required this.allGenreIds,
     required this.allGenreNames,
+    required this.isFavourite,
+    required this.index,
   });
   final Movie movie;
   final List<int> allGenreIds;
   final List<String> allGenreNames;
+  final bool isFavourite;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put<MovieWidgetController>(MovieWidgetController());
+    final moviesController = Get.find<MoviesController>();
     return Padding(
       padding: EdgeInsets.only(bottom: 20.h),
       child: InkWell(
@@ -88,14 +96,36 @@ class MovieListTile extends StatelessWidget {
                         SizedBox(
                           height: 30,
                           width: 30,
-                          child: InkWell(
-                            onTap: () {},
-                            borderRadius: BorderRadius.circular(20),
-                            splashColor: QColors.splashColor,
-                            highlightColor: QColors.splashColor,
-                            child: const Icon(
-                              Icons.bookmark_outline,
-                              color: QColors.white,
+                          child: Obx(
+                            () => InkWell(
+                              onTap: () {
+                                // moviesController.faveMovies.clear();
+
+                                // controller.addToFavourites(movie: movie);
+
+                                moviesController.isFaveMovieList[index]
+                                    ? controller.removeFromFavourites(
+                                        movie: movie,
+                                      )
+                                    : controller.addToFavourites(movie: movie);
+
+                                moviesController.isFaveMovieList[index] =
+                                    !moviesController.isFaveMovieList[index];
+
+                                print(moviesController.faveMovies.values);
+                              },
+                              borderRadius: BorderRadius.circular(20),
+                              splashColor: QColors.splashColor,
+                              highlightColor: QColors.splashColor,
+                              child: moviesController.isFaveMovieList[index]
+                                  ? const Icon(
+                                      Icons.bookmark_added,
+                                      color: QColors.primary,
+                                    )
+                                  : const Icon(
+                                      Icons.bookmark_outline,
+                                      color: QColors.white,
+                                    ),
                             ),
                           ),
                         ),
@@ -114,7 +144,8 @@ class MovieListTile extends StatelessWidget {
                                     index++) {
                                   if (i == allGenreIds[index]) {
                                     return GenreWidget(
-                                        text: allGenreNames[index]);
+                                      text: allGenreNames[index],
+                                    );
                                   }
                                 }
                                 return GenreWidget(text: i.toString());

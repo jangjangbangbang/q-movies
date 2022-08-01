@@ -36,20 +36,42 @@ class HomeScreen extends GetView<HomeController> {
                       fit: BoxFit.fitHeight,
                       height: 24.h,
                     ),
-                    TextButton(
-                      onPressed: () {
-                        if (controller.hasInternet.value) {
-                          moviesController
-                            ..resetData()
-                            ..fetchDataFromApi(page: 1);
-                        }
-                      },
-                      style: TextButton.styleFrom(primary: QColors.white),
-                      child: Text(
-                        'Refresh',
-                        style:
-                            QTypography.title.copyWith(color: Colors.white38),
-                      ),
+                    Obx(
+                      () => controller.hasInternet.value
+                          ? TextButton(
+                              onPressed: () {
+                                if (controller.hasInternet.value) {
+                                  moviesController.refreshData();
+                                }
+                              },
+                              style:
+                                  TextButton.styleFrom(primary: QColors.white),
+                              child: Text(
+                                'Refresh',
+                                style: QTypography.title.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          : Row(
+                              children: [
+                                Container(
+                                  height: 8.h,
+                                  width: 8.h,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white38,
+                                  ),
+                                ),
+                                SizedBox(width: 4.w),
+                                Text(
+                                  'Offline',
+                                  style: QTypography.title.copyWith(
+                                    color: Colors.white38,
+                                  ),
+                                )
+                              ],
+                            ),
                     )
                   ],
                 ),

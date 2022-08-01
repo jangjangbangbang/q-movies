@@ -28,6 +28,11 @@ class MoviesController extends GetxController {
   final boxCache = Boxes.getCacheHive();
   final isBoxCacheEmpty = true.obs;
 
+  final faveMovies = Boxes.getFavourites();
+  RxList<int> faveMoviesId = RxList([]);
+
+  RxList<bool> isFaveMovieList = RxList([]);
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -46,14 +51,15 @@ class MoviesController extends GetxController {
         ? await fetchDataFromApi(page: page)
         : boxCache.isEmpty
             ? isBoxCacheEmpty.value = true
-            : await fetchDataFromHive();
+            : fetchDataFromHive();
   }
 
-  void resetData() {
+  void refreshData() {
     movies.clear();
     isLoading.value = true;
     page = 1;
     reachedEndOfPage.value = false;
+    fetchDataFromApi(page: page);
   }
 
   ///Fetch data from api and update cache data
@@ -91,6 +97,23 @@ class MoviesController extends GetxController {
 
         await cacheMovies(movies: movies, genres: genres);
 
+        await fetchFavourites();
+
+        isFaveMovieList.value =
+            List<bool>.filled(movies.length + 20, false, growable: true);
+
+        for (var i = 0; i < movies.length; i++) {
+          faveMoviesId.map((id) {
+            if (movies[i].id == id) isFaveMovieList[i] = true;
+          }).toList();
+        }
+
+        // faveMovies.values.map((faveMovie) {
+        //   for (var i = 0; i < movies.length; i++) {
+        //     if (faveMovie.id == movies[i].id) isFaveMovieList[i] = true;
+        //   }
+        // });
+
         isLoading.value = false;
       } else {
         await Fluttertoast.showToast(
@@ -115,8 +138,6 @@ class MoviesController extends GetxController {
       ..genres = genres;
 
     await boxCache.add(cacheMovies);
-
-    // boxCache.values.map((e) => print(e.genres));
   }
 
   ///Fetch data from cached hive
@@ -125,7 +146,35 @@ class MoviesController extends GetxController {
       movies.addAll(cacheData.movies);
       genres.addAll(cacheData.genres);
     }).toList();
+
+    if (allGenreIds.isEmpty && genres.isNotEmpty) {
+      genres.map((genre) {
+        final genreId = genre.id;
+        final genreName = genre.name;
+        allGenreIds.add(genreId);
+        allGenreNames.add(genreName);
+      }).toList();
+    }
+
+    await fetchFavourites();
+
+    isFaveMovieList.value =
+        List<bool>.filled(movies.length + 20, false, growable: true);
+
+    for (var i = 0; i < movies.length; i++) {
+      faveMoviesId.map((id) {
+        if (movies[i].id == id) isFaveMovieList[i] = true;
+      }).toList();
+    }
+
     isLoading.value = false;
+  }
+
+  Future<void> fetchFavourites() async {
+    faveMoviesId.clear();
+    faveMovies.values.map((fave) {
+      faveMoviesId.add(fave.id);
+    }).toList();
   }
 
   Future<bool> onWillPop() async {

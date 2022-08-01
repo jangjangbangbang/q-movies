@@ -19,10 +19,11 @@ Future<void> main() async {
   await Hive.initFlutter();
 
   Hive
+    ..registerAdapter(CacheHiveAdapter())
     ..registerAdapter(MovieAdapter())
-    ..registerAdapter(GenreAdapter())
-    ..registerAdapter(CacheHiveAdapter());
+    ..registerAdapter(GenreAdapter());
   await Hive.openBox<CacheHive>('cacheHive');
+  await Hive.openBox<Movie>('favourites');
 
   runApp(const MyApp());
 }

@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
-import 'package:q_movies/modules/global_widgets/movie_list_tile.dart';
+import 'package:q_movies/modules/global_widgets/boxes.dart';
+import 'package:q_movies/modules/global_widgets/movie_widget/movie_widget.dart';
 import 'package:q_movies/modules/home/home_controller.dart';
 import 'package:q_movies/modules/movies/movies_controller.dart';
 import 'package:shimmer/shimmer.dart';
@@ -47,8 +48,9 @@ class _MoviesScreenState extends State<MoviesScreen>
                 () => Expanded(
                   child: controller.isLoading.value
                       ? const Center(
-                          child:
-                              CircularProgressIndicator(color: QColors.primary),
+                          child: CircularProgressIndicator(
+                            color: QColors.primary,
+                          ),
                         )
                       : ListView.builder(
                           controller: controller.scrollController,
@@ -63,10 +65,13 @@ class _MoviesScreenState extends State<MoviesScreen>
 
                             return Column(
                               children: [
-                                MovieListTile(
+                                MovieWidget(
                                   movie: movie,
                                   allGenreIds: controller.allGenreIds,
                                   allGenreNames: controller.allGenreNames,
+                                  isFavourite:
+                                      controller.isFaveMovieList[index],
+                                  index: index,
                                 ),
                                 if (index == controller.movies.length - 1)
                                   if (!controller.reachedEndOfPage.value)
