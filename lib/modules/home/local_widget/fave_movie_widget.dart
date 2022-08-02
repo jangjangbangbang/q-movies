@@ -113,7 +113,7 @@ class FaveMovieWidget extends StatelessWidget {
 
                               controller
                                 ..removeBookmark(id: movie.id)
-                                ..refreshData();
+                                ..fetchFavourites();
                             },
                             borderRadius: BorderRadius.circular(20),
                             splashColor: QColors.splashColor,

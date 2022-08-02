@@ -146,19 +146,6 @@ class HomeController extends GetxController {
 
         await fetchFavourites();
 
-        isFaveMovieList.value =
-            List<bool>.filled(movies.length + 20, false, growable: true);
-
-        for (var i = 0; i < movies.length; i++) {
-          faveMoviesId.map((id) {
-            if (movies[i].id == id) {
-              isFaveMovieList[i] = true;
-            } else {
-              isFaveMovieList[i] = false;
-            }
-          }).toList();
-        }
-
         // faveMovies.values.map((faveMovie) {
         //   for (var i = 0; i < movies.length; i++) {
         //     if (faveMovie.id == movies[i].id) isFaveMovieList[i] = true;
@@ -215,19 +202,6 @@ class HomeController extends GetxController {
 
     await fetchFavourites();
 
-    isFaveMovieList.value =
-        List<bool>.filled(movies.length + 20, false, growable: true);
-
-    for (var i = 0; i < movies.length; i++) {
-      faveMoviesId.map((id) {
-        if (movies[i].id == id) {
-          isFaveMovieList[i] = true;
-        } else {
-          isFaveMovieList[i] = false;
-        }
-      }).toList();
-    }
-
     isLoading.value = false;
   }
 
@@ -236,6 +210,15 @@ class HomeController extends GetxController {
     faveMovies.values.map((fave) {
       faveMoviesId.add(fave.id);
     }).toList();
+
+    isFaveMovieList.value =
+        List<bool>.filled(movies.length + 20, false, growable: true);
+
+    for (var i = 0; i < movies.length; i++) {
+      faveMoviesId.map((id) {
+        if (movies[i].id == id) isFaveMovieList[i] = true;
+      }).toList();
+    }
   }
 
   Future<bool> onWillPop() async {

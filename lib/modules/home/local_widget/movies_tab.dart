@@ -59,7 +59,6 @@ class _MoviesTabState extends State<MoviesTab>
                           itemCount: controller.movies.length,
                           itemBuilder: (context, index) {
                             final movie = controller.movies[index];
-
                             return Column(
                               children: [
                                 MovieWidget(

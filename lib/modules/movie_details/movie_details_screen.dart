@@ -145,7 +145,7 @@ class MovieDetailsScreen extends GetView<MovieDetailsController> {
                                       ? movie.id - 5264
                                       : movie.id,
                                 )
-                                ..refreshData();
+                                ..fetchFavourites();
                             },
                             child: controller.isBookmarked.value
                                 ? const Icon(

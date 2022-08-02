@@ -25,52 +25,37 @@ class HomeScreen extends GetView<HomeController> {
               elevation: 0,
               title: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/img-logo.svg',
-                      fit: BoxFit.fitHeight,
-                      height: 24.h,
-                    ),
-                    Obx(
-                      () => controller.hasInternet.value
-                          ? TextButton(
-                              onPressed: () {
-                                if (controller.hasInternet.value) {
-                                  controller.refreshData();
-                                }
-                              },
-                              style:
-                                  TextButton.styleFrom(primary: QColors.white),
-                              child: Text(
-                                'Refresh',
-                                style: QTypography.title.copyWith(
-                                  color: Colors.white,
-                                ),
+                child: Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/img-logo.svg',
+                        fit: BoxFit.fitHeight,
+                        height: 24.h,
+                      ),
+                      if (!controller.hasInternet.value)
+                        Row(
+                          children: [
+                            Container(
+                              height: 8.h,
+                              width: 8.h,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white38,
+                              ),
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              'Offline',
+                              style: QTypography.title.copyWith(
+                                color: Colors.white38,
                               ),
                             )
-                          : Row(
-                              children: [
-                                Container(
-                                  height: 8.h,
-                                  width: 8.h,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white38,
-                                  ),
-                                ),
-                                SizedBox(width: 4.w),
-                                Text(
-                                  'Offline',
-                                  style: QTypography.title.copyWith(
-                                    color: Colors.white38,
-                                  ),
-                                )
-                              ],
-                            ),
-                    )
-                  ],
+                          ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
