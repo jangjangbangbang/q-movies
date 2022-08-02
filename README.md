@@ -1,7 +1,7 @@
 
 # Q Movies
 
-Q Flutter Task for Janssen Delos Santos
+Flutter task for coding skill assessment
 
 #### Summary:
 Development Duration: 4 days
@@ -57,4 +57,6 @@ Advanced Version - ALL
 ## Demo
 
 https://drive.google.com/file/d/1zs6vxW315PZiPTRtKtNsYbGRzAK5mazK/view
+![q](https://i.imgur.com/SAtnWUa.gif)
+![q2](https://i.imgur.com/A6pZNoP.gif)
 
