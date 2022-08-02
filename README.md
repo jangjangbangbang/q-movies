@@ -3,14 +3,17 @@
 
 Flutter task for coding skill assessment
 
-#### Summary
-Candidate: Janssen Delos Santos
+## Summary
+Candidate: [Janssen Delos Santos](https://www.linkedin.com/in/jangdsantos/)
 
 Development Duration: 4 days
+
 #### Finished Tasks
 Simple Version: ALL
 
 Advanced Version: ALL
+
+Finished Product: https://drive.google.com/file/d/1zs6vxW315PZiPTRtKtNsYbGRzAK5mazK/view
 
 
 
@@ -53,12 +56,4 @@ Advanced Version: ALL
 - Used Hero animation when transitioning to details page, and animate_do package for simple fade animation
 - Used lottie animation for displaying empty data
 - Used flutterscreen_util package for dynamic sizing and based the measurements on the figma design
-## Developer
-
-- [Janssen Delos Santos](https://www.linkedin.com/in/jangdsantos/)
-
-
-## Demo
-
-https://drive.google.com/file/d/1zs6vxW315PZiPTRtKtNsYbGRzAK5mazK/view
 
