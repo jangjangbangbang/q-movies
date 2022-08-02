@@ -161,7 +161,6 @@ class HomeController extends GetxController {
         isLoading.value = false;
       }
     } catch (e) {
-      print(e);
       isLoading.value = false;
     }
   }

@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
-import 'package:q_movies/modules/home/local_widget/movie_widget.dart';
 import 'package:q_movies/modules/home/home_controller.dart';
+import 'package:q_movies/modules/home/local_widget/movie_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MoviesTab extends StatefulWidget {

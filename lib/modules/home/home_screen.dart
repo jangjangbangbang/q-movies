@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
-import 'package:q_movies/modules/home/local_widget/favourites_tab.dart';
 import 'package:q_movies/modules/home/home_controller.dart';
+import 'package:q_movies/modules/home/local_widget/favourites_tab.dart';
 import 'package:q_movies/modules/home/local_widget/movies_tab.dart';
 
 class HomeScreen extends GetView<HomeController> {

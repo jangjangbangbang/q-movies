@@ -13,11 +13,9 @@ class BoxController extends GetxController {
 
   Future<void> addToFavourites({required Movie movie}) async {
     await faveBox.put(movie.id, movie);
-    print('add');
   }
 
   Future<void> removeFromFavourites({required Movie movie}) async {
     await faveBox.delete(movie.id);
-    print('remove');
   }
 }

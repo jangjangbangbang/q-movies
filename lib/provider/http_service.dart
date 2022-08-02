@@ -26,7 +26,6 @@ class HttpService {
     try {
       response = await _dio.get(endPoint);
     } on DioError catch (e) {
-      print(e.message);
       throw Exception(e.message);
     }
 
@@ -37,15 +36,12 @@ class HttpService {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onError: (err, handler) {
-          print('error ${err.message}');
           handler.next(err);
         },
         onRequest: (request, handler) {
-          print('request ${request.method} ${request.path}');
           handler.next(request);
         },
         onResponse: (response, handler) {
-          print('success ${response.data}');
           handler.next(response);
         },
       ),
