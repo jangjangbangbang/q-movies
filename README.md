@@ -4,6 +4,7 @@
 Flutter task for coding skill assessment
 
 #### Summary:
+Candidate: Janssen Delos Santos
 Development Duration: 4 days
 #### Finished Tasks:
 Simple Version - ALL
@@ -57,6 +58,4 @@ Advanced Version - ALL
 ## Demo
 
 https://drive.google.com/file/d/1zs6vxW315PZiPTRtKtNsYbGRzAK5mazK/view
-![q](https://i.imgur.com/SAtnWUa.gif)
-![q2](https://i.imgur.com/A6pZNoP.gif)
 
