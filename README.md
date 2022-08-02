@@ -6,8 +6,9 @@ Q Flutter Task for Janssen Delos Santos
 #### Summary:
 Development Duration: 4 days
 #### Finished Tasks:
-##### Simple - ALL
-##### Advanced - ALL
+Simple Version - ALL
+
+Advanced Version - ALL
 
 
 
@@ -50,7 +51,7 @@ Development Duration: 4 days
 - Used flutterscreen_util package for dynamic sizing and based the measurements on the figma design
 ## Developer
 
-- [Janssen Delos Santos](https://www.github.com/jangjangbangbang)
+- [Janssen Delos Santos](https://www.linkedin.com/in/jangdsantos/)
 
 
 ## Demo
