@@ -34,6 +34,18 @@ Development Duration: 4 days
 - Add some animation transition between overview and details page
 
 
+## Solution
+
+- Used postman to test API
+- Used dio for fetching data from server
+- Used api_key to successfully authorize API requests
+- Implemented pagination when fetching movies
+- Used bearer token header authorization and created auth interceptor using dio package
+- Used flushbar on displaying notifications when the user change network
+- Instead of using NavigationBar, I used TabBar so it has a swipe feature when switching from movies to favourites
+- Used Hive for local data storage specifically for caching fetched data from api and storing favourites
+- Used Hero animation when transitioning to details page, and animate_do package for simple fade animation
+- Used flutterscreen_util package for dynamic sizing and based the measurements on the figma design
 ## Authors
 
 - [@jangjangbangbang](https://www.github.com/jangjangbangbang)
