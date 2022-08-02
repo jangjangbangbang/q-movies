@@ -41,14 +41,16 @@ Development Duration: 4 days
 - Used api_key to successfully authorize API requests
 - Implemented pagination when fetching movies
 - Used bearer token header authorization and created auth interceptor using dio package
-- Used flushbar on displaying notifications when the user change network
+- Used another_flushbar package on displaying notifications when the user change network
 - Instead of using NavigationBar, I used TabBar so it has a swipe feature when switching from movies to favourites
 - Used Hive for local data storage specifically for caching fetched data from api and storing favourites
+- Used cached_network_image for caching network images
 - Used Hero animation when transitioning to details page, and animate_do package for simple fade animation
+- Used lottie animation for displaying empty data
 - Used flutterscreen_util package for dynamic sizing and based the measurements on the figma design
-## Authors
+## Developer
 
-- [@jangjangbangbang](https://www.github.com/jangjangbangbang)
+- [Janssen Delos Santos](https://www.github.com/jangjangbangbang)
 
 
 ## Demo
