@@ -1,16 +1,45 @@
-# q_movies
 
-A new Flutter project.
+# Q Movies
 
-## Getting Started
+Q Flutter Task for Janssen Delos Santos
 
-This project is a starting point for a Flutter application.
+#### Summary:
+Development Duration: 4 days
+#### Finished Tasks:
+##### Simple - ALL
+##### Advanced - ALL
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Tasks
+
+####  Simple Version
+
+- Fetch the genres from the API to be able to associate the genre ids with the genre names
+- Fetch popular movies from the API
+- Cache the movies into a database of your choice (Hive, sqflite,...)
+- Implement pagination when fetching movies
+- Use the api_key as the query parameter in each request in order to successfully authorise the API requests
+- When the user selects a movie, open the details page
+- Try to make the UI look as close as possible to the provided Simple version section of the Figma file
+
+#### Advanced Version
+
+- Implement the navigation bar
+- Add the favourite movies feature - NOTE: the user can toggle the movie as a favourite in the Movie list, Favourites list and in the Movie details page
+- Cache the favourite movies into a database of your choice (Hive, sqflite,...)
+- Bearer token header authorization (see example in postman) - bonus points for creating a custom auth interceptor in using the dio package
+- Show notification when user is offline - NOTE: show cached movies but let the user know he is offline
+- Add some animation transition between overview and details page
+
+
+## Authors
+
+- [@jangjangbangbang](https://www.github.com/jangjangbangbang)
+
+
+## Demo
+
+https://drive.google.com/file/d/1zs6vxW315PZiPTRtKtNsYbGRzAK5mazK/view
+
