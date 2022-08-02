@@ -44,6 +44,8 @@ class MovieWidget extends StatelessWidget {
                 'movie': movie,
                 'allGenreIds': allGenreIds,
                 'allGenreNames': allGenreNames,
+                'isBookmarked': controller.isFaveMovieList[index],
+                'fromFave': false,
               }
             ],
           );

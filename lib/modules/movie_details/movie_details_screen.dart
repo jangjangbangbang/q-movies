@@ -7,7 +7,9 @@ import 'package:q_movies/core/qcolors.dart';
 import 'package:q_movies/core/qtypography.dart';
 import 'package:q_movies/models/movie.dart';
 import 'package:q_movies/modules/global_widgets/genre_widget.dart';
+import 'package:q_movies/modules/home/home_controller.dart';
 import 'package:q_movies/modules/movie_details/movie_details_controller.dart';
+import 'package:q_movies/utils/boxes.dart';
 
 class MovieDetailsScreen extends GetView<MovieDetailsController> {
   const MovieDetailsScreen({super.key});
@@ -74,6 +76,8 @@ class MovieDetailsScreen extends GetView<MovieDetailsController> {
   }
 
   Expanded _movieDescription(Movie movie) {
+    final boxController = Get.put<BoxController>(BoxController());
+    final homeController = Get.put<HomeController>(HomeController());
     return Expanded(
       child: FadeInUp(
         child: DecoratedBox(
@@ -97,19 +101,61 @@ class MovieDetailsScreen extends GetView<MovieDetailsController> {
                         style: QTypography.header.copyWith(height: 1.5),
                       ),
                     ),
-                    Material(
-                      color: Colors.transparent,
-                      child: SizedBox(
-                        height: 54.h,
-                        width: 54.h,
-                        child: InkWell(
-                          splashColor: QColors.splashColor,
-                          highlightColor: QColors.splashColor,
-                          borderRadius: BorderRadius.circular(99),
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.bookmark_border,
-                            color: QColors.white,
+                    Obx(
+                      () => Material(
+                        color: Colors.transparent,
+                        child: SizedBox(
+                          height: 54.h,
+                          width: 54.h,
+                          child: InkWell(
+                            splashColor: QColors.splashColor,
+                            highlightColor: QColors.splashColor,
+                            borderRadius: BorderRadius.circular(99),
+                            onTap: () {
+                              controller.isBookmarked.value
+                                  ? boxController.removeFromFavourites(
+                                      movie: Movie(
+                                        id: controller.fromFave
+                                            ? movie.id - 5264
+                                            : movie.id,
+                                        title: movie.title,
+                                        overview: movie.overview,
+                                        posterPath: movie.posterPath,
+                                        voteAverage: movie.voteAverage,
+                                        genreIds: movie.genreIds,
+                                      ),
+                                    )
+                                  : boxController.addToFavourites(
+                                      movie: Movie(
+                                        id: controller.fromFave
+                                            ? movie.id - 5264
+                                            : movie.id,
+                                        title: movie.title,
+                                        overview: movie.overview,
+                                        posterPath: movie.posterPath,
+                                        voteAverage: movie.voteAverage,
+                                        genreIds: movie.genreIds,
+                                      ),
+                                    );
+                              controller.isBookmarked.toggle();
+
+                              homeController
+                                ..removeBookmark(
+                                  id: controller.fromFave
+                                      ? movie.id - 5264
+                                      : movie.id,
+                                )
+                                ..refreshData();
+                            },
+                            child: controller.isBookmarked.value
+                                ? const Icon(
+                                    Icons.bookmark_added,
+                                    color: QColors.primary,
+                                  )
+                                : const Icon(
+                                    Icons.bookmark_outline,
+                                    color: QColors.white,
+                                  ),
                           ),
                         ),
                       ),

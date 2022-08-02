@@ -151,7 +151,11 @@ class HomeController extends GetxController {
 
         for (var i = 0; i < movies.length; i++) {
           faveMoviesId.map((id) {
-            if (movies[i].id == id) isFaveMovieList[i] = true;
+            if (movies[i].id == id) {
+              isFaveMovieList[i] = true;
+            } else {
+              isFaveMovieList[i] = false;
+            }
           }).toList();
         }
 
@@ -216,7 +220,11 @@ class HomeController extends GetxController {
 
     for (var i = 0; i < movies.length; i++) {
       faveMoviesId.map((id) {
-        if (movies[i].id == id) isFaveMovieList[i] = true;
+        if (movies[i].id == id) {
+          isFaveMovieList[i] = true;
+        } else {
+          isFaveMovieList[i] = false;
+        }
       }).toList();
     }
 

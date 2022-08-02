@@ -42,7 +42,7 @@ class FaveMovieWidget extends StatelessWidget {
             arguments: [
               {
                 'movie': Movie(
-                  id: movie.id * 2,
+                  id: movie.id + 5264,
                   title: movie.title,
                   overview: movie.overview,
                   posterPath: movie.posterPath,
@@ -51,6 +51,8 @@ class FaveMovieWidget extends StatelessWidget {
                 ),
                 'allGenreIds': allGenreIds,
                 'allGenreNames': allGenreNames,
+                'isBookmarked': true,
+                'fromFave': true,
               }
             ],
           );
@@ -160,7 +162,7 @@ class FaveMovieWidget extends StatelessWidget {
 
   Widget _moviePoster() {
     return Hero(
-      tag: movie.id * 2,
+      tag: movie.id + 5264,
       child: CachedNetworkImage(
         imageUrl: 'https://image.tmdb.org/t/p/w500/${movie.posterPath}',
         fit: BoxFit.fitWidth,
