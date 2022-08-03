@@ -13,7 +13,7 @@ Simple Version: ALL
 
 Advanced Version: ALL
 
-Finished Product: https://drive.google.com/file/d/1zs6vxW315PZiPTRtKtNsYbGRzAK5mazK/view
+Finished Product: [Q-Movies.apk](https://drive.google.com/file/d/1zs6vxW315PZiPTRtKtNsYbGRzAK5mazK/view)
 
 
 
@@ -38,6 +38,10 @@ Finished Product: https://drive.google.com/file/d/1zs6vxW315PZiPTRtKtNsYbGRzAK5m
 - Bearer token header authorization (see example in postman) - bonus points for creating a custom auth interceptor in using the dio package
 - Show notification when user is offline - NOTE: show cached movies but let the user know he is offline
 - Add some animation transition between overview and details page
+
+Postman Collection: https://drive.google.com/file/d/13DAnn3hnNMqutwPP7SiYTzl6W9XcTKlH/view?usp=sharing
+
+Figma Link: https://www.figma.com/file/sa5h842w6cR6ZP2XBDWxS1/Flutter-test-app?node-id=0%3A1
 
 
 ## Solution
